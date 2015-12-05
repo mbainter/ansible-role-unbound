@@ -1,4 +1,9 @@
 ---
+- name: install unbound-anchor for Ubuntu distribution
+  apt: pkg=unbound state={{ unbound_pkg_state }}
+  when: ansible_distribution == 'Ubuntu' and unbound_only_zones == false
+  tags: ["packages","unbound"]
+
 - name: install unbound for Debian OS family
   apt: pkg=unbound state={{ unbound_pkg_state }}
   when: ansible_os_family == 'Debian' and unbound_only_zones == false
