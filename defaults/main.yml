@@ -39,12 +39,13 @@ unbound_default_local_zone: "static"
 unbound_inventory_domain_with_reverse: true
 
 unbound_zones: 
-    - name: "default"
+   - name: "default"
 
-unbound_forward_zone_active : true
-unbound_forward_zone:
-   - 8.8.8.8 #Google DNS 1
-   - 8.8.4.4 #Google DNS 2
+unbound_forward_zones:
+   - name: "."
+     forward_address:
+        - 8.8.8.8 #Google DNS 1
+        - 8.8.4.4 #Google DNS 2
 
 # Package states: installed or latest
 unbound_pkg_state: installed
