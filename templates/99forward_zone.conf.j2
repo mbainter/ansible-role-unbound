@@ -2,10 +2,10 @@
 
 {% for zone in unbound_forward_zones %}
     forward-zone:
-        name: {{ zone.name }}
+        name: "{{ zone.name }}"
 {% if zone.forward_host is defined %}
 {% for host in zone.forward_host %}
-        forward-host: {{ host }}
+        forward-host: "{{ host }}"
 {% endfor %}
 {% endif %}
 {% if zone.forward_address is defined %}
