@@ -57,6 +57,16 @@
   notify: restart unbound
   tags: ["configuration","unbound"]
 
+- name: disable updating default forwarders from resolvconf
+  lineinfile: dest=/etc/default/unbound regexp='^RESOLVCONF_FORWARDERS=true' state=absent
+  tags: ["configuration","unbound"]
+
+- name: disable updating default forwarders from resolvconf
+  lineinfile: dest=/etc/default/unbound regexp='^RESOLVCONF_FORWARDERS=' line='RESOLVCONF_FORWARDERS=false'
+  when: "{{unbound_configuration.root-hints is defined }}"
+  notify: restart unbound
+  tags: ["configuration","unbound"]
+
 - name: ensure unbound is started/stopped
   service: 
      name=unbound
