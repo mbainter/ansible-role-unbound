@@ -75,9 +75,13 @@
      pattern="unbound"
   tags: ["service","unbound"]
 
-- name: verify proper root forwarding
+- name: check root forwarding
   when: "{{unbound_configuration.root-hints is defined }}"
   command: /usr/sbin/unbound-control list_forwards | /usr/bin/awk '/^. IN/ {print 1; exit}'
   register: listforwards
+  tags: ["configuration","unbound"]
+
+- name: assert proper root forwarding
+  when: "{{unbound_configuration.root-hints is defined }}"
   assert: { that: "listforwards != '1'" }
   tags: ["configuration","unbound"]
