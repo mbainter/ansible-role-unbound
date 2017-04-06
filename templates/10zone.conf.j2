@@ -6,6 +6,7 @@
 {% set inventory_domain = item.inventory_domain | default(unbound_inventory_domain) %}
 {% set domains = item.domains | default(unbound_domains) %}
 {% set inventory_domain_with_reverse = item.inventory_domain_with_reverse|default(unbound_inventory_domain_with_reverse) %}
+{% set stub_zone = item.stub_zone | default(unbound_stub_zone) %}
 
 
 {% for domain in domains_with_reverses %}
@@ -40,5 +41,13 @@
 {% elif subdomain != "domain_name" %}
     local-data: "{{ subdomain }}.{{ domain.domain_name }}. {{ entry }}"
 {% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for zone in unbound_stub_zone %}
+    stub-zone:
+        name: "{{ zone.name }}"
+{% for addr in zone.stub_addr %}
+        stub-addr: {{ addr }}
 {% endfor %}
 {% endfor %}

@@ -47,6 +47,8 @@ unbound_forward_zones:
         - 8.8.8.8 #Google DNS 1
         - 8.8.4.4 #Google DNS 2
 
+unbound_stub_zone: []
+
 # Package states: installed or latest
 unbound_pkg_state: installed
 
