@@ -61,9 +61,16 @@
   lineinfile: dest=/etc/default/unbound regexp='^RESOLVCONF_FORWARDERS=true' state=absent
   tags: ["configuration","unbound"]
 
+- name: Check for the existence of root hints
+  shell: "cat /etc/unbound/conf.d/01general.conf | grep 'root-hints:' | awk '{print $2}'"
+  changed_when: False
+  check_mode: no
+  register: root_hints
+  tags: ["configuration","unbound"]
+
 - name: disable updating default forwarders from resolvconf
   lineinfile: dest=/etc/default/unbound regexp='^RESOLVCONF_FORWARDERS=' line='RESOLVCONF_FORWARDERS=false'
-  when: "{{unbound_configuration.root-hints is defined }}"
+  when: "{{ root_hints.stdout != '' }}"
   notify: restart unbound
   tags: ["configuration","unbound"]
 
@@ -76,12 +83,12 @@
   tags: ["service","unbound"]
 
 - name: check root forwarding
-  when: "{{unbound_configuration.root-hints is defined }}"
+  when: "{{ root_hints.stdout != '' }}"
   command: /usr/sbin/unbound-control list_forwards | /usr/bin/awk '/^. IN/ {print 1; exit}'
   register: listforwards
   tags: ["configuration","unbound"]
 
 - name: assert proper root forwarding
-  when: "{{unbound_configuration.root-hints is defined }}"
+  when: "{{ root_hints.stdout != '' }}"
   assert: { that: "listforwards != '1'" }
   tags: ["configuration","unbound"]
