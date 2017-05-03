@@ -1,6 +1,11 @@
 ---
 - name: restart unbound
   service: name=unbound state=restarted
+  listen: restart unbound
+
+- name: Verify that the the unbound service is running
+  command: service unbound status
+  listen: restart unbound
 
 - name: reload unbound
   service: name=unbound state=reloaded
