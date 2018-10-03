@@ -11,7 +11,7 @@ Ansible role for Unbound DNS Server and resolver
 - IPv4 only for reverse
 
 # Information :
-- Test on Ubuntu
+- Test on Ubuntu and Alpine
 - Untested on debian and fedora
 
 # Example :
