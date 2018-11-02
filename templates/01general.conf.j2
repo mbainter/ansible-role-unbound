@@ -3,7 +3,11 @@
 {% for config in unbound_configuration %}
     {{ config.keys().0 }}: {{ config.values().0 }}
 {% endfor %}
+{% if ansible_os_family == 'Alpine' %}
+    auto-trust-anchor-file: "/usr/share/dnssec-root/trusted-key.key"
+{% else %}
     auto-trust-anchor-file: "/var/lib/unbound/root.key"
+{% endif %}
 {% for interface in unbound_interfaces %}
     interface: {{interface}}
 {% endfor %}
