@@ -58,3 +58,10 @@ unbound_service_state: started
 # Service enabled on startup: yes or no
 unbound_service_enabled: yes
 
+remote_control: False
+control_interface: 127.0.0.1
+control_port: 8953
+server_key_file: "/etc/unbound/unbound_server.key"
+server_cert_file: "/etc/unbound/unbound_server.pem"
+control_key_file: "/etc/unbound/unbound_control.key"
+control_cert_file: "/etc/unbound/unbound_control.pem"
