@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-/var/log/unbound.log {
+{{ unbound_logfile }} {
     daily
     rotate 7
     missingok

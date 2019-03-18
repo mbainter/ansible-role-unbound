@@ -113,10 +113,11 @@
 - name: check for logrotation directory
   stat: path=/etc/logrotate.d
   register: lrd
+  tags: ["unbound", "logrotate"]
   
- - name: create unbound logrotation config
-   template:
-       src=unbound-logrotate.j2
-       dest=/etc/logrotate.d/unbound
-    when: lrd.stat.isdir is defined and lrd.stat.isdir
-    tags: ["unbound", "logrotate"]
+- name: create unbound logrotation config
+  template:
+     src=unbound-logrotate.j2
+     dest=/etc/logrotate.d/unbound
+  when: lrd.stat.isdir is defined and lrd.stat.isdir
+  tags: ["unbound", "logrotate"]
