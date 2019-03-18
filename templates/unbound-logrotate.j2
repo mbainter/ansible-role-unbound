@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+/var/log/unbound.log {
+    daily
+    rotate 7
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+    create 644
+    postrotate
+{% if ansible_os_family == 'Alpine' %}
+        /usr/sbin/unbound-control log_reopen
+{% else %}
+        /usr/local/sbin/unbound-control log_reopen
+{% endif %}
+    endscript
+}
